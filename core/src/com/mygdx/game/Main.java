@@ -6,7 +6,10 @@ import com.mygdx.game.screen.MainScreen;
 
 public class Main extends Game {
 	SpriteBatch batch;
-
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 800;
+	public static final int NODES_AMOUNT = 10;
+	public static final float NODE_SIZE = WIDTH/NODES_AMOUNT;
 	
 	@Override
 	public void create () {
