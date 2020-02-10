@@ -9,14 +9,23 @@ public class PathFindingController {
 
     private ArrayList<Node> openSet;
     private ArrayList<Node> closeSet;
-    private ArrayList<Node> nodes;
+    private DrawController drawController;
     private Node endNode;
 
     public PathFindingController() {
         openSet = new ArrayList<>();
         closeSet = new ArrayList<>();
+        drawController = new DrawController();
     }
 
+
+    public void performSearch() {
+
+    }
+
+
+    // getters and setters
+    
     public void setStart(Node start) {
         this.openSet.add(start);
     }
@@ -24,6 +33,23 @@ public class PathFindingController {
         this.endNode = endNode;
     }
 
+    public ArrayList<Node> getOpenSet() {
+        return openSet;
+    }
 
+    public void setOpenSet(ArrayList<Node> openSet) {
+        this.openSet = openSet;
+    }
 
+    public ArrayList<Node> getCloseSet() {
+        return closeSet;
+    }
+
+    public void setCloseSet(ArrayList<Node> closeSet) {
+        this.closeSet = closeSet;
+    }
+
+    public Node getEndNode() {
+        return endNode;
+    }
 }

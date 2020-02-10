@@ -21,7 +21,8 @@ public class MainScreen implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.grid.drawNodes();
+        this.grid.draw();
+        this.grid.calculatePath();
 
     }
 
