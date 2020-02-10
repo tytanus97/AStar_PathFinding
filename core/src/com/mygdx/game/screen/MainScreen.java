@@ -7,6 +7,8 @@ import com.mygdx.game.Main;
 import com.mygdx.game.controller.PathFindingController;
 import com.mygdx.game.entity.Grid;
 
+import java.nio.file.Path;
+
 public class MainScreen implements Screen {
     private Grid grid;
 
@@ -24,7 +26,9 @@ public class MainScreen implements Screen {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
             this.grid.draw();
-            this.grid.calculatePath();
+            if(!PathFindingController.failure) {
+                this.grid.calculatePath();
+            }
 
 
     }

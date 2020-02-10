@@ -12,6 +12,7 @@ public class PathFindingController {
     private ArrayList<Node> path;
     private Node endNode;
     private boolean isDone = false;
+    public static boolean failure = false;
 
     public PathFindingController() {
         openSet = new ArrayList<>();
@@ -32,7 +33,6 @@ public class PathFindingController {
             current = openSet.get(lowest);
             if(current==endNode) {
                 System.out.println("DONE");
-
                 isDone = true;
             }
             openSet.remove(current);
@@ -41,18 +41,23 @@ public class PathFindingController {
             for(int i=0;i<current.getNeighbours().size();i++) {
                 Node neighbour = current.getNeighbours().get(i);
                  if(!closeSet.contains(neighbour) && !neighbour.isWall()) {
-                     float tmpG = current.getG()+1;
+                     float tmpG = current.getG()+heuristic(current,neighbour);
+                     boolean newPath = false;
                      if(openSet.contains(neighbour)) {
                          if(tmpG < neighbour.getG()) {
                              neighbour.setG(tmpG);
+                             newPath = true;
                          }
                      }else {
                          neighbour.setG(tmpG);
                          openSet.add(neighbour);
+                         newPath = true;
                      }
-                     neighbour.setH(heuristic(neighbour,endNode));
-                     neighbour.setF(neighbour.getG()+neighbour.getH());
-                     neighbour.setPrevious(current);
+                     if(newPath) {
+                         neighbour.setH(heuristic(neighbour, endNode));
+                         neighbour.setF(neighbour.getG() + neighbour.getH());
+                         neighbour.setPrevious(current);
+                     }
 
 
                  }
@@ -67,16 +72,19 @@ public class PathFindingController {
             }
 
 
+        } else if(!isDone)  {
+            failure = true;
+            System.out.println("Nie udalo sie , sorry mate");
         }
     }
 
     public static float heuristic(Node neighbour, Node endNode) {
-       // float dist = Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
-        //        endNode.getPosition().x,neighbour.getPosition().y);
+         float dist = Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
+              endNode.getPosition().x,endNode.getPosition().y);
 
 
-        float dist = (Math.abs((int)neighbour.getPosition().x-(int)endNode.getPosition().x) +
-               Math.abs((int)neighbour.getPosition().y-(int)endNode.getPosition().y));
+        //float dist = (Math.abs((int)neighbour.getPosition().x-(int)endNode.getPosition().x) +
+        //       Math.abs((int)neighbour.getPosition().y-(int)endNode.getPosition().y));
         return dist;
     }
 
@@ -120,4 +128,6 @@ public class PathFindingController {
     public void resetPath() {
         this.path.clear();
     }
+
+
 }

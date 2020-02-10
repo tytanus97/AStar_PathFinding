@@ -31,37 +31,37 @@ public class Node {
         this.neighbours = new ArrayList<Node>();
         this.previous = null;
 
-        if((int)(Math.random()*10) > 7) {
+        if((int)(Math.random()*10) > 6) {
             this.wall = true;
         }
 
     }
 
     public void addNeighbours(Node[][] nodes) {
-//        try {
-//            this.neighbours.add(nodes[(int) this.position.x - 1][(int) this.position.y + 1]);
-//        }catch(IndexOutOfBoundsException exc) {}
+        try {
+            this.neighbours.add(nodes[(int) this.position.x - 1][(int) this.position.y + 1]);
+        }catch(IndexOutOfBoundsException exc) {}
         try {
             this.neighbours.add(nodes[(int) this.position.x ][(int) this.position.y + 1]);
         }catch(IndexOutOfBoundsException exc) {}
-//        try {
-//            this.neighbours.add(nodes[(int) this.position.x + 1][(int) this.position.y + 1]);
-//        }catch(IndexOutOfBoundsException exc) {}
+        try {
+            this.neighbours.add(nodes[(int) this.position.x + 1][(int) this.position.y + 1]);
+        }catch(IndexOutOfBoundsException exc) {}
         try {
             this.neighbours.add(nodes[(int) this.position.x - 1][(int) this.position.y]);
         }catch(IndexOutOfBoundsException exc) {}
         try {
             this.neighbours.add(nodes[(int) this.position.x + 1][(int) this.position.y]);
         }catch(IndexOutOfBoundsException exc) {}
-//        try {
-//            this.neighbours.add(nodes[(int) this.position.x - 1][(int) this.position.y - 1]);
-//        }catch(IndexOutOfBoundsException exc) {}
+        try {
+            this.neighbours.add(nodes[(int) this.position.x - 1][(int) this.position.y - 1]);
+        }catch(IndexOutOfBoundsException exc) {}
         try {
             this.neighbours.add(nodes[(int) this.position.x][(int) this.position.y - 1]);
         }catch(IndexOutOfBoundsException exc) {}
-//        try {
-//            this.neighbours.add(nodes[(int) this.position.x + 1][(int) this.position.y - 1]);
-//        }catch(IndexOutOfBoundsException exc) {}
+        try {
+            this.neighbours.add(nodes[(int) this.position.x + 1][(int) this.position.y - 1]);
+        }catch(IndexOutOfBoundsException exc) {}
     }
 
 

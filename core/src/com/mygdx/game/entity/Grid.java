@@ -75,7 +75,7 @@ public class Grid {
         this.drawController.drawNodes(this.nodes,this.nodes_x,this.nodes_y);
         this.drawController.drawNodeSet(this.openSet,Color.GREEN);
         this.drawController.drawNodeSet(this.closeSet,Color.YELLOW);
-        this.drawController.drawNodeSet(this.path,Color.BLUE);
+        this.drawController.drawNodeSet(this.path,Color.RED);
 
 
     }
