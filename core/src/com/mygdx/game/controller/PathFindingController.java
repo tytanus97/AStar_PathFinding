@@ -71,7 +71,6 @@ public class PathFindingController {
                 tmp = tmp.getPrevious();
             }
 
-
         } else if(!isDone)  {
             failure = true;
             System.out.println("Nie udalo sie , sorry mate");
@@ -79,13 +78,8 @@ public class PathFindingController {
     }
 
     public static float heuristic(Node neighbour, Node endNode) {
-         float dist = Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
+        return  Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
               endNode.getPosition().x,endNode.getPosition().y);
-
-
-        //float dist = (Math.abs((int)neighbour.getPosition().x-(int)endNode.getPosition().x) +
-        //       Math.abs((int)neighbour.getPosition().y-(int)endNode.getPosition().y));
-        return dist;
     }
 
 

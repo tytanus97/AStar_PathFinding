@@ -31,9 +31,7 @@ public class Node {
         this.neighbours = new ArrayList<Node>();
         this.previous = null;
 
-        if((int)(Math.random()*10) > 6) {
-            this.wall = true;
-        }
+
 
     }
 

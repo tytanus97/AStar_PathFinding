@@ -3,14 +3,16 @@ package com.mygdx.game.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Main;
 import com.mygdx.game.controller.DrawController;
 import com.mygdx.game.controller.PathFindingController;
+import javafx.stage.Stage;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class Grid {
+public class Grid{
     private int nodes_x;
     private int nodes_y;
     private Node[][] nodes;
@@ -75,8 +77,20 @@ public class Grid {
         this.drawController.drawNodes(this.nodes,this.nodes_x,this.nodes_y);
         this.drawController.drawNodeSet(this.openSet,Color.GREEN);
         this.drawController.drawNodeSet(this.closeSet,Color.YELLOW);
-        this.drawController.drawNodeSet(this.path,Color.RED);
+        this.drawController.drawNodeSet(this.path,Color.BLUE);
 
 
+    }
+
+    public Node[][] getNodes() {
+        return this.nodes;
+    }
+
+    public int getNodes_x() {
+        return nodes_x;
+    }
+
+    public int getNodes_y() {
+        return nodes_y;
     }
 }
