@@ -49,9 +49,13 @@ public class Grid {
                 this.nodes[i][j].addNeighbours(this.nodes);
             }
         }
+        //unset start and end node if accidently turned to wall
+        this.nodes[0][0].setWall(false);
+        this.nodes[nodes_x-1][nodes_y-1].setWall(false);
 
         //init the f value of start node
         this.nodes[0][0].setF(PathFindingController.heuristic(this.nodes[0][0],this.nodes[nodes_x-1][nodes_y-1]));
+
         //pass the start and end node to controller
         this.pathFindingController.setStart(this.nodes[0][0]);
         this.pathFindingController.setEndNode(this.nodes[nodes_x-1][nodes_y-1]);
@@ -72,5 +76,7 @@ public class Grid {
         this.drawController.drawNodeSet(this.openSet,Color.GREEN);
         this.drawController.drawNodeSet(this.closeSet,Color.YELLOW);
         this.drawController.drawNodeSet(this.path,Color.BLUE);
+
+
     }
 }

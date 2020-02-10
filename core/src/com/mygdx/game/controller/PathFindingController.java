@@ -4,27 +4,25 @@ import com.mygdx.game.entity.Node;
 import com.sun.javafx.geom.Point2D;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PathFindingController {
 
     private ArrayList<Node> openSet;
     private ArrayList<Node> closeSet;
     private ArrayList<Node> path;
-    private DrawController drawController;
     private Node endNode;
     private boolean isDone = false;
 
     public PathFindingController() {
         openSet = new ArrayList<>();
         closeSet = new ArrayList<>();
-        path = new ArrayList<Node>();
-        drawController = new DrawController();
+        path = new ArrayList<>();
     }
 
     public void performSearch() {
         Node current;
         if(!openSet.isEmpty() && !isDone) {
+            this.resetPath();
             int lowest = 0;
             for(int i=0;i<openSet.size();i++) {
                 if(openSet.get(i).getF() < openSet.get(lowest).getF()) {
@@ -34,13 +32,7 @@ public class PathFindingController {
             current = openSet.get(lowest);
             if(current==endNode) {
                 System.out.println("DONE");
-                Node tmp = current;
-                this.path.add(tmp);
-                while(tmp.getPrevious()!= null)
-                {
-                    this.path.add(tmp.getPrevious());
-                    tmp = tmp.getPrevious();
-                }
+
                 isDone = true;
             }
             openSet.remove(current);
@@ -48,7 +40,7 @@ public class PathFindingController {
 
             for(int i=0;i<current.getNeighbours().size();i++) {
                 Node neighbour = current.getNeighbours().get(i);
-                 if(!closeSet.contains(neighbour)) {
+                 if(!closeSet.contains(neighbour) && !neighbour.isWall()) {
                      float tmpG = current.getG()+1;
                      if(openSet.contains(neighbour)) {
                          if(tmpG < neighbour.getG()) {
@@ -61,7 +53,17 @@ public class PathFindingController {
                      neighbour.setH(heuristic(neighbour,endNode));
                      neighbour.setF(neighbour.getG()+neighbour.getH());
                      neighbour.setPrevious(current);
+
+
                  }
+            }
+
+            Node tmp = current;
+            this.path.add(tmp);
+            while(tmp.getPrevious()!= null)
+            {
+                this.path.add(tmp.getPrevious());
+                tmp = tmp.getPrevious();
             }
 
 
@@ -69,10 +71,13 @@ public class PathFindingController {
     }
 
     public static float heuristic(Node neighbour, Node endNode) {
-        return Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
-                                endNode.getPosition().x,neighbour.getPosition().y);
-//        return (Math.abs((int)neighbour.getPosition().x-(int)endNode.getPosition().x) +
-//                Math.abs((int)neighbour.getPosition().y-(int)endNode.getPosition().y));
+       // float dist = Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
+        //        endNode.getPosition().x,neighbour.getPosition().y);
+
+
+        float dist = (Math.abs((int)neighbour.getPosition().x-(int)endNode.getPosition().x) +
+               Math.abs((int)neighbour.getPosition().y-(int)endNode.getPosition().y));
+        return dist;
     }
 
 
@@ -110,5 +115,9 @@ public class PathFindingController {
 
     public boolean isDone() {
         return isDone;
+    }
+
+    public void resetPath() {
+        this.path.clear();
     }
 }

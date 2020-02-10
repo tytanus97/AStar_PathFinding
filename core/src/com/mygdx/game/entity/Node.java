@@ -16,6 +16,7 @@ public class Node {
     private float h;
     private Node previous;
     private ArrayList<Node> neighbours;
+    private boolean wall = false;
 
 
     public Node() {
@@ -30,33 +31,37 @@ public class Node {
         this.neighbours = new ArrayList<Node>();
         this.previous = null;
 
+        if((int)(Math.random()*10) > 7) {
+            this.wall = true;
+        }
+
     }
 
     public void addNeighbours(Node[][] nodes) {
-        try {
-            this.neighbours.add(nodes[(int) this.position.x - 1][(int) this.position.y + 1]);
-        }catch(IndexOutOfBoundsException exc) {}
+//        try {
+//            this.neighbours.add(nodes[(int) this.position.x - 1][(int) this.position.y + 1]);
+//        }catch(IndexOutOfBoundsException exc) {}
         try {
             this.neighbours.add(nodes[(int) this.position.x ][(int) this.position.y + 1]);
         }catch(IndexOutOfBoundsException exc) {}
-        try {
-            this.neighbours.add(nodes[(int) this.position.x + 1][(int) this.position.y + 1]);
-        }catch(IndexOutOfBoundsException exc) {}
+//        try {
+//            this.neighbours.add(nodes[(int) this.position.x + 1][(int) this.position.y + 1]);
+//        }catch(IndexOutOfBoundsException exc) {}
         try {
             this.neighbours.add(nodes[(int) this.position.x - 1][(int) this.position.y]);
         }catch(IndexOutOfBoundsException exc) {}
         try {
             this.neighbours.add(nodes[(int) this.position.x + 1][(int) this.position.y]);
         }catch(IndexOutOfBoundsException exc) {}
-        try {
-            this.neighbours.add(nodes[(int) this.position.x - 1][(int) this.position.y - 1]);
-        }catch(IndexOutOfBoundsException exc) {}
+//        try {
+//            this.neighbours.add(nodes[(int) this.position.x - 1][(int) this.position.y - 1]);
+//        }catch(IndexOutOfBoundsException exc) {}
         try {
             this.neighbours.add(nodes[(int) this.position.x][(int) this.position.y - 1]);
         }catch(IndexOutOfBoundsException exc) {}
-        try {
-            this.neighbours.add(nodes[(int) this.position.x + 1][(int) this.position.y - 1]);
-        }catch(IndexOutOfBoundsException exc) {}
+//        try {
+//            this.neighbours.add(nodes[(int) this.position.x + 1][(int) this.position.y - 1]);
+//        }catch(IndexOutOfBoundsException exc) {}
     }
 
 
@@ -114,5 +119,13 @@ public class Node {
 
     public void setPrevious(Node previous) {
         this.previous = previous;
+    }
+
+    public boolean isWall() {
+        return wall;
+    }
+
+    public void setWall(boolean wall) {
+        this.wall = wall;
     }
 }

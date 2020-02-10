@@ -21,7 +21,8 @@ public class DrawController {
         this.shapeRenderer.set(ShapeRenderer.ShapeType.Line);
         for(int i=0;i<nodes_x;i++) {
             for(int j=0;j<nodes_y;j++) {
-
+                if(nodes[i][j].isWall()) this.shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+                else this.shapeRenderer.set(ShapeRenderer.ShapeType.Line);
                 shapeRenderer.rect(nodes[i][j].getPosition().x* Main.NODE_SIZE,nodes[i][j].getPosition().y* Main.NODE_SIZE,
                         nodes[i][j].getSize(),nodes[i][j].getSize());
             }
