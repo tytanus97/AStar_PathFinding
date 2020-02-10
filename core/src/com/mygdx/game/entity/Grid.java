@@ -7,6 +7,7 @@ import com.mygdx.game.Main;
 import com.mygdx.game.controller.DrawController;
 import com.mygdx.game.controller.PathFindingController;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Grid {
@@ -17,6 +18,7 @@ public class Grid {
     private DrawController drawController;
     private ArrayList<Node> openSet;
     private ArrayList<Node> closeSet;
+    private ArrayList<Node> path;
 
     public Grid() {
 
@@ -41,13 +43,23 @@ public class Grid {
         this.nodes[0][0] = new Node(new Vector2(0,0));
         this.nodes[Main.NODES_AMOUNT-1][Main.NODES_AMOUNT-1] = new Node(new Vector2(Main.NODES_AMOUNT-1,Main.NODES_AMOUNT-1));
 
+        //init node neighbours
+        for(int i=0;i<this.nodes_x;i++) {
+            for(int j=0;j<this.nodes_y;j++) {
+                this.nodes[i][j].addNeighbours(this.nodes);
+            }
+        }
+
+        //init the f value of start node
+        this.nodes[0][0].setF(PathFindingController.heuristic(this.nodes[0][0],this.nodes[nodes_x-1][nodes_y-1]));
         //pass the start and end node to controller
         this.pathFindingController.setStart(this.nodes[0][0]);
-        this.pathFindingController.setEndNode(this.nodes[Main.NODES_AMOUNT - 1][Main.NODES_AMOUNT - 1]);
+        this.pathFindingController.setEndNode(this.nodes[nodes_x-1][nodes_y-1]);
 
         //update openset and closeset from pathController
         this.openSet = this.pathFindingController.getOpenSet();
         this.closeSet = this.pathFindingController.getCloseSet();
+        this.path = this.pathFindingController.getPath();
 
     }
 
@@ -59,5 +71,6 @@ public class Grid {
         this.drawController.drawNodes(this.nodes,this.nodes_x,this.nodes_y);
         this.drawController.drawNodeSet(this.openSet,Color.GREEN);
         this.drawController.drawNodeSet(this.closeSet,Color.YELLOW);
+        this.drawController.drawNodeSet(this.path,Color.BLUE);
     }
 }
