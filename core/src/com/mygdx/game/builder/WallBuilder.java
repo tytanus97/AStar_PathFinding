@@ -25,7 +25,7 @@ public class WallBuilder implements InputProcessor {
     }
 
 
-    private void setWall(int x, int y,boolean wall) {
+    private void setWall(int x, int y,boolean wall) throws IndexOutOfBoundsException {
         nodes[x][y].setWall(wall);
     }
 
@@ -89,7 +89,22 @@ public class WallBuilder implements InputProcessor {
         int x = screenX;
         x /= Main.NODE_SIZE;
         y /= Main.NODE_SIZE;
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) setWall(x,y,true);
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            try {
+                setWall(x,y,true);
+            }catch(IndexOutOfBoundsException exc) {}
+            try {
+                setWall(x,y+1,true);
+            }catch(IndexOutOfBoundsException exc) {}
+            try {
+                setWall(x+1,y+1,true);
+            }catch(IndexOutOfBoundsException exc) {}
+            try {
+                setWall(x+1,y,true);
+            }catch(IndexOutOfBoundsException exc) {}
+
+
+        }
         else if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) setWall(x,y,false);
         return false;
     }
