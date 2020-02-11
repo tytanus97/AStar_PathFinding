@@ -90,6 +90,16 @@ public class PathFindingController {
 
     }
 
+    public void reinitialize() {
+        this.openSet.clear();
+        this.closeSet.clear();
+        this.path.clear();
+        this.isDone = false;
+        failure = false;
+        this.startNode = null;
+        this.endNode = null;
+    }
+
     // getters and setters
     public void setStart(Node start) {
         this.startNode = start;

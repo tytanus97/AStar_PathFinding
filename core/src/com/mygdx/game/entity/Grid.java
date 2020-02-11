@@ -57,7 +57,7 @@ public class Grid{
 
     public void draw() {
         this.drawController.drawNodes(this.nodes,this.nodes_x,this.nodes_y);
-       // this.drawController.drawNodeSet(this.openSet,Color.GREEN);
+        this.drawController.drawNodeSet(this.openSet,Color.PURPLE);
         this.drawController.drawNodeSet(this.closeSet,Color.YELLOW);
         this.drawController.drawNodeSet(this.path,Color.GREEN);
         if(this.pathFindingController.getStartNode()!= null) {
