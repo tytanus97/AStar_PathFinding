@@ -1,6 +1,7 @@
 package com.mygdx.game.builder;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.Main;
 import com.mygdx.game.entity.Grid;
@@ -10,6 +11,8 @@ import com.mygdx.game.screen.MainScreen;
 public class WallBuilder implements InputProcessor {
     private Grid grid;
     private Node[][] nodes;
+    private boolean startPlaced = false;
+    private boolean endPlaced = false;
 
     public WallBuilder(Grid grid) {
         Gdx.input.setInputProcessor(this);
@@ -22,16 +25,32 @@ public class WallBuilder implements InputProcessor {
     }
 
 
-    private void setWall(int x, int y) {
-        nodes[x][y].setWall(true);
+    private void setWall(int x, int y,boolean wall) {
+        nodes[x][y].setWall(wall);
     }
 
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == 62) {
+        if (keycode == 62 && startPlaced && endPlaced) {
             Gdx.input.setInputProcessor(null);
+            this.grid.initializePathFindingController();
             MainScreen.enableRun = true;
+
+        }
+        else {
+            int y = Math.abs(Gdx.input.getY() - Main.HEIGHT);
+            int x = Gdx.input.getX();
+            x /= Main.NODE_SIZE;
+            y /= Main.NODE_SIZE;
+            if (keycode == 30) {
+                this.grid.setStart(x,y);
+                startPlaced = true;
+            }
+            else if(keycode == 33) {
+                this.grid.setEnd(x,y);
+                endPlaced = true;
+            }
         }
         return false;
     }
@@ -48,17 +67,17 @@ public class WallBuilder implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
+        int y = Math.abs(screenY - Main.HEIGHT);
+        int x = screenX;
+        x /= Main.NODE_SIZE;
+        y /= Main.NODE_SIZE;
+        if(button == Input.Buttons.LEFT) setWall(x,y,true);
+        else if (button == Input.Buttons.RIGHT) setWall(x,y,false);
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        int y = Math.abs(screenY - Main.HEIGHT);
-        int x = screenX;
-        x /= Main.NODE_SIZE;
-        y /= Main.NODE_SIZE;
-        setWall(x,y);
         return false;
     }
 
@@ -70,7 +89,8 @@ public class WallBuilder implements InputProcessor {
         int x = screenX;
         x /= Main.NODE_SIZE;
         y /= Main.NODE_SIZE;
-        setWall(x,y);
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) setWall(x,y,true);
+        else if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) setWall(x,y,false);
         return false;
     }
 

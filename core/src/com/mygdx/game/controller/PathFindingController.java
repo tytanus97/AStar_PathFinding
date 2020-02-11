@@ -11,6 +11,7 @@ public class PathFindingController {
     private ArrayList<Node> closeSet;
     private ArrayList<Node> path;
     private Node endNode;
+    private Node startNode;
     private boolean isDone = false;
     public static boolean failure = false;
 
@@ -18,6 +19,7 @@ public class PathFindingController {
         openSet = new ArrayList<>();
         closeSet = new ArrayList<>();
         path = new ArrayList<>();
+
     }
 
     public void performSearch() {
@@ -81,11 +83,17 @@ public class PathFindingController {
         return  Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
               endNode.getPosition().x,endNode.getPosition().y);
     }
+    //add start node to openset and calculate its f as heuristic to end node
+    public void initialize() {
+        this.startNode.setF(heuristic(this.startNode,this.endNode));
+        this.openSet.add(this.startNode);
 
+    }
 
     // getters and setters
     public void setStart(Node start) {
-        this.openSet.add(start);
+        this.startNode = start;
+
     }
     public void setEndNode(Node endNode) {
         this.endNode = endNode;
@@ -109,6 +117,9 @@ public class PathFindingController {
 
     public Node getEndNode() {
         return endNode;
+    }
+    public Node getStartNode() {
+        return startNode;
     }
 
     public ArrayList<Node> getPath() {

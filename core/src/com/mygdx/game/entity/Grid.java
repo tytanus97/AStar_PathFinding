@@ -1,15 +1,10 @@
 package com.mygdx.game.entity;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygdx.game.Main;
 import com.mygdx.game.controller.DrawController;
 import com.mygdx.game.controller.PathFindingController;
-import javafx.stage.Stage;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Grid{
@@ -41,9 +36,6 @@ public class Grid{
                 this.nodes[i][j] = new Node( new Vector2(i, j));
             }
         }
-        //set first element of array as start node and last as end node
-        this.nodes[0][0] = new Node(new Vector2(0,0));
-        this.nodes[Main.NODES_AMOUNT-1][Main.NODES_AMOUNT-1] = new Node(new Vector2(Main.NODES_AMOUNT-1,Main.NODES_AMOUNT-1));
 
         //init node neighbours
         for(int i=0;i<this.nodes_x;i++) {
@@ -51,16 +43,6 @@ public class Grid{
                 this.nodes[i][j].addNeighbours(this.nodes);
             }
         }
-        //unset start and end node if accidently turned to wall
-        this.nodes[0][0].setWall(false);
-        this.nodes[nodes_x-1][nodes_y-1].setWall(false);
-
-        //init the f value of start node
-        this.nodes[0][0].setF(PathFindingController.heuristic(this.nodes[0][0],this.nodes[nodes_x-1][nodes_y-1]));
-
-        //pass the start and end node to controller
-        this.pathFindingController.setStart(this.nodes[0][0]);
-        this.pathFindingController.setEndNode(this.nodes[nodes_x-1][nodes_y-1]);
 
         //update openset and closeset from pathController
         this.openSet = this.pathFindingController.getOpenSet();
@@ -75,9 +57,15 @@ public class Grid{
 
     public void draw() {
         this.drawController.drawNodes(this.nodes,this.nodes_x,this.nodes_y);
-        this.drawController.drawNodeSet(this.openSet,Color.GREEN);
+       // this.drawController.drawNodeSet(this.openSet,Color.GREEN);
         this.drawController.drawNodeSet(this.closeSet,Color.YELLOW);
-        this.drawController.drawNodeSet(this.path,Color.BLUE);
+        this.drawController.drawNodeSet(this.path,Color.GREEN);
+        if(this.pathFindingController.getStartNode()!= null) {
+            this.drawController.drawNode(this.pathFindingController.getStartNode(), Color.BLUE);
+        }
+        if(this.pathFindingController.getEndNode()!=null) {
+            this.drawController.drawNode(this.pathFindingController.getEndNode(), Color.RED);
+        }
 
 
     }
@@ -92,5 +80,23 @@ public class Grid{
 
     public int getNodes_y() {
         return nodes_y;
+    }
+
+    public void setStart(int x,int y) {
+        this.nodes[x][y].setWall(false);
+        this.pathFindingController.setStart(this.nodes[x][y]);
+        this.draw();
+
+
+    }
+    public void setEnd(int x,int y) {
+        this.nodes[x][y].setWall(false);
+        this.pathFindingController.setEndNode(this.nodes[x][y]);
+        this.draw();
+
+    }
+
+    public void initializePathFindingController() {
+        this.pathFindingController.initialize();
     }
 }
