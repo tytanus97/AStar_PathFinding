@@ -13,7 +13,7 @@ public class PathFindingController {
     private ArrayList<Node> path;
     private Node endNode;
     private Node startNode;
-    private boolean isDone = false;
+    public static boolean isDone = false;
     public static boolean failure = false;
     private DrawController drawController;
 
@@ -29,10 +29,8 @@ public class PathFindingController {
         Node current;
 
         if(!openSet.isEmpty() && !isDone) {
-            for (Node node: openSet) {
-                System.out.println(node.getPosition().x);
-            }
-            System.out.println("casdas");
+
+
             this.resetPath();
             int lowest = 0;
             for(int i=0;i<openSet.size();i++) {

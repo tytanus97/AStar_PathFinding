@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.Main;
 import com.mygdx.game.builder.WallBuilder;
 import com.mygdx.game.entity.Grid;
+import com.sun.javafx.binding.StringFormatter;
 
 public class MainController implements InputProcessor {
     private WallBuilder wallBuilder;
@@ -29,6 +30,7 @@ public class MainController implements InputProcessor {
     public void resetGrid() {
         enableRun = false;
         this.pathController.resetPathFindingController();
+        drawGrid();
     }
 
     public void proceedSearch() {
@@ -40,7 +42,12 @@ public class MainController implements InputProcessor {
             Gdx.input.setInputProcessor(null);
             this.pathController.initialize();
             MainController.enableRun = true;
-        } else {
+        }
+        else if(keycode == 46) {
+            System.out.println("elo");
+            resetGrid();
+            }
+        else {
             int y = Math.abs(Gdx.input.getY() - Main.HEIGHT);
             int x = Gdx.input.getX();
             x /= Main.NODE_SIZE;
@@ -75,6 +82,9 @@ public class MainController implements InputProcessor {
         x /= Main.NODE_SIZE;
         y /= Main.NODE_SIZE;
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            this.wallBuilder.setWall(x,y,true);
+        }
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT) && Gdx.input.isButtonPressed(Input.Buttons.RIGHT) ) {
             try {
                 this.wallBuilder.setWall(x,y,true);
             }catch(IndexOutOfBoundsException exc) {}
@@ -101,6 +111,9 @@ public class MainController implements InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
+        if(character == 'r' || character == 'R') {
+            resetGrid();
+        }
         return false;
     }
 
