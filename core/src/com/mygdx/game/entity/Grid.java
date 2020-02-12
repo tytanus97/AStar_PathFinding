@@ -39,6 +39,14 @@ public class Grid{
         this.drawController.drawNodes(this.nodes,this.nodes_x,this.nodes_y);
 
     }
+    public void reset() {
+        for(int i=0;i<this.nodes_x;i++) {
+            for(int j=0;j<this.nodes_y;j++) {
+                this.nodes[i][j].setWall(false);
+                this.nodes[i][j].setPrevious(null);
+            }
+        }
+    }
 
     public Node[][] getNodes() {
         return this.nodes;

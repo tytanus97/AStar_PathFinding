@@ -78,7 +78,7 @@ public class PathFindingController {
             }
 
         } else if(!isDone)  {
-           // failure = true;
+           failure = true;
             System.out.println("Nie udalo sie , sorry mate");
         }
     }
@@ -101,6 +101,7 @@ public class PathFindingController {
     }
     //add start node to openset and calculate its f as heuristic to end node
     public void initialize() {
+
         this.startNode.setF(heuristic(this.startNode,this.endNode));
         this.openSet.add(this.startNode);
 
@@ -110,10 +111,9 @@ public class PathFindingController {
         this.openSet.clear();
         this.closeSet.clear();
         this.path.clear();
-        this.isDone = false;
+        isDone = false;
         failure = false;
-        this.startNode = null;
-        this.endNode = null;
+        draw();
     }
 
     // getters and setters

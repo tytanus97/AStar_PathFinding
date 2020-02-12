@@ -6,7 +6,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.Main;
 import com.mygdx.game.builder.WallBuilder;
 import com.mygdx.game.entity.Grid;
-import com.sun.javafx.binding.StringFormatter;
 
 public class MainController implements InputProcessor {
     private WallBuilder wallBuilder;
@@ -17,7 +16,7 @@ public class MainController implements InputProcessor {
     private boolean endPlaced = false;
 
     public MainController() {
-        Gdx.input.setInputProcessor(this);
+
         this.grid = new Grid(Main.NODES_AMOUNT,Main.NODES_AMOUNT);
         this.pathController = new PathFindingController();
         this.wallBuilder = new WallBuilder(this.grid,pathController);
@@ -29,8 +28,10 @@ public class MainController implements InputProcessor {
     }
     public void resetGrid() {
         enableRun = false;
+
         this.pathController.resetPathFindingController();
-        drawGrid();
+        this.grid.reset();
+        this.grid.draw();
     }
 
     public void proceedSearch() {
@@ -39,14 +40,12 @@ public class MainController implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == 62 && startPlaced && endPlaced) {
-            Gdx.input.setInputProcessor(null);
             this.pathController.initialize();
             MainController.enableRun = true;
         }
         else if(keycode == 46) {
-            System.out.println("elo");
             resetGrid();
-            }
+        }
         else {
             int y = Math.abs(Gdx.input.getY() - Main.HEIGHT);
             int x = Gdx.input.getX();

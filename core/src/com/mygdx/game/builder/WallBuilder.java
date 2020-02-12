@@ -20,6 +20,7 @@ public class WallBuilder{
     }
 
     public void setStart(int x, int y) {
+
         this.pathFindingController.setStartNode(nodes[x][y]);
         this.pathFindingController.draw();
     }
