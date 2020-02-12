@@ -31,8 +31,6 @@ public class Node {
         this.neighbours = new ArrayList<Node>();
         this.previous = null;
 
-
-
     }
 
     public void addNeighbours(Node[][] nodes) {

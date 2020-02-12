@@ -1,5 +1,6 @@
 package com.mygdx.game.controller;
 
+import com.badlogic.gdx.graphics.Color;
 import com.mygdx.game.entity.Node;
 import com.sun.javafx.geom.Point2D;
 
@@ -14,17 +15,24 @@ public class PathFindingController {
     private Node startNode;
     private boolean isDone = false;
     public static boolean failure = false;
+    private DrawController drawController;
 
     public PathFindingController() {
         openSet = new ArrayList<>();
         closeSet = new ArrayList<>();
         path = new ArrayList<>();
+        drawController = new DrawController();
 
     }
 
-    public void performSearch() {
+   public  void performSearch() {
         Node current;
+
         if(!openSet.isEmpty() && !isDone) {
+            for (Node node: openSet) {
+                System.out.println(node.getPosition().x);
+            }
+            System.out.println("casdas");
             this.resetPath();
             int lowest = 0;
             for(int i=0;i<openSet.size();i++) {
@@ -33,7 +41,7 @@ public class PathFindingController {
                 }
             }
             current = openSet.get(lowest);
-            if(current==endNode) {
+            if(current == endNode) {
                 System.out.println("DONE");
                 isDone = true;
             }
@@ -60,8 +68,6 @@ public class PathFindingController {
                          neighbour.setF(neighbour.getG() + neighbour.getH());
                          neighbour.setPrevious(current);
                      }
-
-
                  }
             }
 
@@ -74,12 +80,24 @@ public class PathFindingController {
             }
 
         } else if(!isDone)  {
-            failure = true;
+           // failure = true;
             System.out.println("Nie udalo sie , sorry mate");
         }
     }
 
-    public static float heuristic(Node neighbour, Node endNode) {
+    public void draw() {
+        this.drawController.drawNodeSet(this.openSet, Color.PURPLE);
+        this.drawController.drawNodeSet(this.closeSet,Color.YELLOW);
+        this.drawController.drawNodeSet(this.path,Color.GREEN);
+        if(startNode!= null) {
+            this.drawController.drawNode(startNode, Color.BLUE);
+        }
+        if(endNode!=null) {
+            this.drawController.drawNode(endNode, Color.RED);
+        }
+    }
+
+    private static float heuristic(Node neighbour, Node endNode) {
         return  Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
               endNode.getPosition().x,endNode.getPosition().y);
     }
@@ -90,7 +108,7 @@ public class PathFindingController {
 
     }
 
-    public void reinitialize() {
+    public void resetPathFindingController() {
         this.openSet.clear();
         this.closeSet.clear();
         this.path.clear();
@@ -101,7 +119,7 @@ public class PathFindingController {
     }
 
     // getters and setters
-    public void setStart(Node start) {
+    public void setStartNode(Node start) {
         this.startNode = start;
 
     }

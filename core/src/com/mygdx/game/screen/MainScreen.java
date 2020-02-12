@@ -3,42 +3,30 @@ package com.mygdx.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.mygdx.game.Main;
-import com.mygdx.game.builder.WallBuilder;
 import com.mygdx.game.controller.PathFindingController;
-import com.mygdx.game.entity.Grid;
+import com.mygdx.game.controller.MainController;
 
 public class MainScreen implements Screen {
-    private Grid grid;
-    public static boolean enableRun = false;
-    private WallBuilder wallBuilder;
-
+    private MainController mainController;
 
     public MainScreen() {
-        this.grid = new Grid(Main.NODES_AMOUNT,Main.NODES_AMOUNT);
-        this.wallBuilder = new WallBuilder(this.grid);
+        this.mainController = new MainController();
+
         Gdx.gl20.glClearColor(1,1,1,1);
     }
     @Override
     public void show() {
 
     }
-
     @Override
     public void render(float delta) {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            if(!enableRun) {
-               this.wallBuilder.draw();
-            }
-            else {
-                this.grid.draw();
-                if (!PathFindingController.failure) {
-                    this.grid.calculatePath();
+            if(MainController.enableRun && !PathFindingController.failure) {
+               this.mainController.proceedSearch();
                 }
-            }
-
-
+            this.mainController.drawGrid();
     }
+
 
     @Override
     public void resize(int width, int height) {

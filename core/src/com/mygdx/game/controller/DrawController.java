@@ -32,7 +32,7 @@ public class DrawController {
         shapeRenderer.end();
     }
 
-    public void drawNodeSet(ArrayList<Node> openSet,Color color) {
+    void drawNodeSet(ArrayList<Node> openSet, Color color) {
 
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         this.shapeRenderer.setColor(color);
@@ -42,7 +42,7 @@ public class DrawController {
         }
         this.shapeRenderer.end();
     }
-    public void drawNode(Node node,Color color) {
+    void drawNode(Node node, Color color) {
         this.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         this.shapeRenderer.setColor(color);
         this.shapeRenderer.rect(node.getPosition().x*Main.NODE_SIZE,node.getPosition().y*Main.NODE_SIZE+1,node.getSize()-1,node.getSize()-1);
