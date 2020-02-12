@@ -34,7 +34,6 @@ public class MainController implements InputProcessor {
     public void proceedSearch() {
         this.pathController.performSearch();
     }
-
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == 62 && startPlaced && endPlaced) {

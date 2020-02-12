@@ -9,7 +9,7 @@ public class Main extends Game {
 	SpriteBatch batch;
 	public static final int WIDTH = 900;
 	public static final int HEIGHT = 900;
-	public static final int NODES_AMOUNT = 50;
+	public static final int NODES_AMOUNT = 100;
 	public static final int NODE_SIZE = WIDTH/NODES_AMOUNT;
 	
 	@Override
