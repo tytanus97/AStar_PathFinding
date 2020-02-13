@@ -9,9 +9,6 @@ public class Grid{
     private Node[][] nodes;
     private DrawController drawController;
 
-    public Grid() {
-
-    }
     public Grid(int w,int h) {
         this.nodes_x = w;
         this.nodes_y = h;

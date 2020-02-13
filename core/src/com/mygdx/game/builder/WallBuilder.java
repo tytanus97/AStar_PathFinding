@@ -39,11 +39,11 @@ public class WallBuilder{
     public void setStart(int x, int y) {
         this.nodes[x][y].setWall(false);
         this.pathFindingController.setStartNode(nodes[x][y]);
-        this.pathFindingController.draw();
+
     }
     public void setEnd(int x,int y) {
         this.nodes[x][y].setWall(false);
         this.pathFindingController.setEndNode(nodes[x][y]);
-        this.pathFindingController.draw();
+
     }
 }

@@ -25,8 +25,6 @@ public class DrawController {
                 else this.shapeRenderer.set(ShapeRenderer.ShapeType.Line);
                 shapeRenderer.rect(nodes[i][j].getPosition().x* Main.NODE_SIZE,nodes[i][j].getPosition().y* Main.NODE_SIZE,
                        nodes[i][j].getSize(),nodes[i][j].getSize());
-               // this.shapeRenderer.circle(nodes[i][j].getPosition().x*Main.NODE_SIZE+nodes[i][j].getSize()/2,nodes[i][j].getPosition().y*Main.NODE_SIZE+1+nodes[i][j].getSize()/2,nodes[i][j].getSize()/2);
-
             }
         }
         shapeRenderer.end();
@@ -38,8 +36,6 @@ public class DrawController {
         this.shapeRenderer.setColor(color);
         for (Node node:openSet) {
             this.shapeRenderer.rect(node.getPosition().x*Main.NODE_SIZE,node.getPosition().y*Main.NODE_SIZE,node.getSize(),node.getSize());
-
-           //this.shapeRenderer.circle(node.getPosition().x*Main.NODE_SIZE+node.getSize()/2,node.getPosition().y*Main.NODE_SIZE+1+node.getSize()/2,node.getSize()/2);
         }
         this.shapeRenderer.end();
     }

@@ -16,6 +16,7 @@ public class PathFindingController {
     public static boolean failure = false;
     private DrawController drawController;
 
+
     public PathFindingController() {
         openSet = new ArrayList<>();
         closeSet = new ArrayList<>();
@@ -41,6 +42,7 @@ public class PathFindingController {
             if(current == endNode) {
                 System.out.println("DONE");
                 isDone = true;
+                MainController.enableRun = false;
             }
             openSet.remove(current);
             closeSet.add(current);
@@ -77,13 +79,14 @@ public class PathFindingController {
             }
 
         } else if(!isDone)  {
-           failure = true;
+            MainController.enableRun = false;
             System.out.println("Nie udalo sie , sorry mate");
         }
     }
 
     public void draw() {
-        this.drawController.drawNodeSet(this.openSet, Color.PURPLE);
+
+        this.drawController.drawNodeSet(this.openSet, Color.ORANGE);
         this.drawController.drawNodeSet(this.closeSet,Color.YELLOW);
         this.drawController.drawNodeSet(this.path,Color.GREEN);
         if(startNode!= null) {
@@ -95,9 +98,6 @@ public class PathFindingController {
     }
 
     private static float heuristic(Node neighbour, Node endNode) {
-       // return  Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
-       //       endNode.getPosition().x,endNode.getPosition().y);
-
         double x1 = neighbour.getPosition().x;
         double y1 = neighbour.getPosition().y;
         double x2 = endNode.getPosition().x;
@@ -122,7 +122,7 @@ public class PathFindingController {
         this.path.clear();
         isDone = false;
         failure = false;
-        draw();
+
     }
 
     // getters and setters

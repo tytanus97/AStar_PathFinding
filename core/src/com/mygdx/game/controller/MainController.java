@@ -23,8 +23,6 @@ public class MainController implements InputProcessor {
     }
     public void drawGrid() {
 
-
-
         this.pathController.draw();
         this.grid.draw();
     }
@@ -41,30 +39,30 @@ public class MainController implements InputProcessor {
     }
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == 62 && startPlaced && endPlaced) {
-
-            this.pathController.initialize();
-            MainController.enableRun = true;
-        }
-        else if(keycode == 46) {
+        if(keycode == 46) {
             resetGrid();
         }
-        else if(keycode == 44) {
-            this.grid.reset();
-            this.wallBuilder.setRandomWalls(this.grid.getNodes_x(),this.grid.getNodes_y());
+        if(!MainController.enableRun && !PathFindingController.isDone) {
+            if (keycode == 62 && startPlaced && endPlaced) {
 
-        }
-        else {
-            int y = Math.abs(Gdx.input.getY() - Main.HEIGHT);
-            int x = Gdx.input.getX();
-            x /= Main.NODE_SIZE;
-            y /= Main.NODE_SIZE;
-            if (keycode == 30) {
-                this.wallBuilder.setStart(x, y);
-                startPlaced = true;
-            } else if (keycode == 33) {
-                this.wallBuilder.setEnd(x, y);
-                endPlaced = true;
+                this.pathController.initialize();
+                MainController.enableRun = true;
+            } else if (keycode == 44) {
+                this.grid.reset();
+                this.wallBuilder.setRandomWalls(this.grid.getNodes_x(), this.grid.getNodes_y());
+
+            } else {
+                int y = Math.abs(Gdx.input.getY() - Main.HEIGHT);
+                int x = Gdx.input.getX();
+                x /= Main.NODE_SIZE;
+                y /= Main.NODE_SIZE;
+                if (keycode == 30) {
+                    this.wallBuilder.setStart(x, y);
+                    startPlaced = true;
+                } else if (keycode == 33) {
+                    this.wallBuilder.setEnd(x, y);
+                    endPlaced = true;
+                }
             }
         }
         return false;
@@ -72,42 +70,48 @@ public class MainController implements InputProcessor {
 
         @Override
         public boolean touchDown ( int screenX, int screenY, int pointer, int button){
-            int y = Math.abs(screenY - Main.HEIGHT);
-            int x = screenX;
-            x /= Main.NODE_SIZE;
-            y /= Main.NODE_SIZE;
-            if (button == Input.Buttons.LEFT) this.wallBuilder.setWall(x, y, true);
-            else if (button == Input.Buttons.RIGHT) this.wallBuilder.setWall(x, y, false);
-
+            if(!MainController.enableRun && !PathFindingController.isDone) {
+                int y = Math.abs(screenY - Main.HEIGHT);
+                int x = screenX;
+                x /= Main.NODE_SIZE;
+                y /= Main.NODE_SIZE;
+                if (button == Input.Buttons.LEFT) this.wallBuilder.setWall(x, y, true);
+                else if (button == Input.Buttons.RIGHT) this.wallBuilder.setWall(x, y, false);
+            }
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        int y = Math.abs(screenY - Main.HEIGHT);
-        int x = screenX;
-        x /= Main.NODE_SIZE;
-        y /= Main.NODE_SIZE;
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-            this.wallBuilder.setWall(x,y,true);
-        }
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT) && Gdx.input.isButtonPressed(Input.Buttons.RIGHT) ) {
-            try {
-                this.wallBuilder.setWall(x,y,true);
-            }catch(IndexOutOfBoundsException exc) {}
-            try {
-                this.wallBuilder.setWall(x,y+1,true);
-            }catch(IndexOutOfBoundsException exc) {}
-            try {
-                this.wallBuilder.setWall(x+1,y+1,true);
-            }catch(IndexOutOfBoundsException exc) {}
-            try {
-                this.wallBuilder.setWall(x+1,y,true);
-            }catch(IndexOutOfBoundsException exc) {}
+        if(!MainController.enableRun && !PathFindingController.isDone) {
+            int y = Math.abs(screenY - Main.HEIGHT);
+            int x = screenX;
+            x /= Main.NODE_SIZE;
+            y /= Main.NODE_SIZE;
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                this.wallBuilder.setWall(x, y, true);
+            }
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+                try {
+                    this.wallBuilder.setWall(x, y, true);
+                } catch (IndexOutOfBoundsException exc) {
+                }
+                try {
+                    this.wallBuilder.setWall(x, y + 1, true);
+                } catch (IndexOutOfBoundsException exc) {
+                }
+                try {
+                    this.wallBuilder.setWall(x + 1, y + 1, true);
+                } catch (IndexOutOfBoundsException exc) {
+                }
+                try {
+                    this.wallBuilder.setWall(x + 1, y, true);
+                } catch (IndexOutOfBoundsException exc) {
+                }
 
 
+            } else if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) this.wallBuilder.setWall(x, y, false);
         }
-        else if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))  this.wallBuilder.setWall(x,y,false);
         return false;
     }
 
@@ -138,19 +142,18 @@ public class MainController implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
-
-        if(amount == 1 && Main.WALL_CHANCE>0.4) {
+        if(!MainController.enableRun && !PathFindingController.isDone) {
+        if (amount == 1 && Main.WALL_CHANCE > 0.4) {
             this.grid.reset();
-            Main.WALL_CHANCE-=0.02f;
-            this.wallBuilder.setRandomWalls(this.grid.getNodes_x(),this.grid.getNodes_y());
-        }
-        else if (amount == -1 && Main.WALL_CHANCE<0.8f)
-        {
+            Main.WALL_CHANCE -= 0.02f;
+            this.wallBuilder.setRandomWalls(this.grid.getNodes_x(), this.grid.getNodes_y());
+        } else if (amount == -1 && Main.WALL_CHANCE < 0.8f) {
             this.grid.reset();
-            Main.WALL_CHANCE+=0.02f;
-            this.wallBuilder.setRandomWalls(this.grid.getNodes_x(),this.grid.getNodes_y());
+            Main.WALL_CHANCE += 0.02f;
+            this.wallBuilder.setRandomWalls(this.grid.getNodes_x(), this.grid.getNodes_y());
 
         }
+    }
         return false;
     }
 }
