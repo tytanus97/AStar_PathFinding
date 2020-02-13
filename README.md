@@ -1,8 +1,8 @@
-### AStar_PathFinding
+# AStar_PathFinding
 
 ## Visualisation of A* pathfinding algorithm
 
-# Controlls
+### Controlls
 
 - SPACE-start algorithm<br>
 - R-reset<br>
