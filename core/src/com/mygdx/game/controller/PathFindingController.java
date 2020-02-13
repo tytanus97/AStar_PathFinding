@@ -2,7 +2,6 @@ package com.mygdx.game.controller;
 
 import com.badlogic.gdx.graphics.Color;
 import com.mygdx.game.entity.Node;
-import com.sun.javafx.geom.Point2D;
 
 import java.util.ArrayList;
 
@@ -96,8 +95,18 @@ public class PathFindingController {
     }
 
     private static float heuristic(Node neighbour, Node endNode) {
-        return  Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
-              endNode.getPosition().x,endNode.getPosition().y);
+       // return  Point2D.distance(neighbour.getPosition().x,neighbour.getPosition().y,
+       //       endNode.getPosition().x,endNode.getPosition().y);
+
+        double x1 = neighbour.getPosition().x;
+        double y1 = neighbour.getPosition().y;
+        double x2 = endNode.getPosition().x;
+        double y2 = endNode.getPosition().y;
+
+            double ac = Math.abs(y2 - y1);
+            double cb = Math.abs(x2 - x1);
+
+            return (float) Math.hypot(ac, cb);
     }
     //add start node to openset and calculate its f as heuristic to end node
     public void initialize() {
