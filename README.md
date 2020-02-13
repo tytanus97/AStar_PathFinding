@@ -1,12 +1,18 @@
-# AStar_PathFinding
+### AStar_PathFinding
 
-Visualisation of A* pathfinding algorithm
+## Visualisation of A* pathfinding algorithm
 
-SPACE-start algorithm
-R-reset
-B-set start
-E-set end
+# Controlls
 
-left mouse - place wall
-right mouse - delete wall
-left + right - place thicker wall
+- SPACE-start algorithm<br>
+- R-reset<br>
+- B-set start<br>
+- E-set end<br>
+
+- P - set random walls
+- Scroll Up/Down - change randomness ratio
+
+- left mouse click - place wall
+- right mouse click - delete wall
+-left mouse drag - draw wall line
+- left + right mouse drag - draw thicker wall line
