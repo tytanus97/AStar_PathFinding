@@ -9,6 +9,7 @@ public class Main extends Game {
 	public static final int WIDTH = 900;
 	public static final int HEIGHT = 900;
 	public static final int NODES_AMOUNT = 50;
+	public static float WALL_CHANCE = 0.5f;
 	public static final float NODE_SIZE = ((float)WIDTH/(float)NODES_AMOUNT);
 	
 	@Override

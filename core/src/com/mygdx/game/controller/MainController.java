@@ -22,9 +22,11 @@ public class MainController implements InputProcessor {
         this.wallBuilder = new WallBuilder(this.grid,pathController);
     }
     public void drawGrid() {
-        this.grid.draw();
-        this.pathController.draw();
 
+
+
+        this.pathController.draw();
+        this.grid.draw();
     }
     public void resetGrid() {
         enableRun = false;
@@ -40,11 +42,17 @@ public class MainController implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == 62 && startPlaced && endPlaced) {
+
             this.pathController.initialize();
             MainController.enableRun = true;
         }
         else if(keycode == 46) {
             resetGrid();
+        }
+        else if(keycode == 44) {
+            this.grid.reset();
+            this.wallBuilder.setRandomWalls(this.grid.getNodes_x(),this.grid.getNodes_y());
+
         }
         else {
             int y = Math.abs(Gdx.input.getY() - Main.HEIGHT);
@@ -130,6 +138,19 @@ public class MainController implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
+
+        if(amount == 1 && Main.WALL_CHANCE>0.4) {
+            this.grid.reset();
+            Main.WALL_CHANCE-=0.02f;
+            this.wallBuilder.setRandomWalls(this.grid.getNodes_x(),this.grid.getNodes_y());
+        }
+        else if (amount == -1 && Main.WALL_CHANCE<0.8f)
+        {
+            this.grid.reset();
+            Main.WALL_CHANCE+=0.02f;
+            this.wallBuilder.setRandomWalls(this.grid.getNodes_x(),this.grid.getNodes_y());
+
+        }
         return false;
     }
 }
