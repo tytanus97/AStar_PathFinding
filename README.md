@@ -1,17 +1,19 @@
 # AStar_PathFinding
 
 ## Visualisation of A* pathfinding algorithm
+## Rules
+-start/end node must be placed in order to start algorithm
+-after the algorithm finish working you can only reset the grid by pressing R
 
 ### Controlls
 
-- SPACE-start algorithm<br>
-- R-reset<br>
-- B-set start<br>
-- E-set end<br>
+- SPACE-start algorithm
+- R-reset
+- B-set start
+- E-set end
+- P-set random walls
 
-- P - set random walls
 - Scroll Up/Down - change randomness ratio
-
 - left mouse click - place wall
 - right mouse click - delete wall
 -left mouse drag - draw wall line
