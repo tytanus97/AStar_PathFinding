@@ -3,7 +3,7 @@
 ## Visualisation of A* pathfinding algorithm
 ## Rules
 - start/end node must be placed in order to start algorithm
-- after the algorithm finish working you can only reset the grid by pressing R
+- after the algorithm finishes working you can only reset the grid by pressing R
 
 ### Controlls
 
